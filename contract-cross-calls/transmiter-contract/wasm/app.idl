@@ -1,0 +1,47 @@
+type QueryEvents = enum {
+  ReceiverContractIdChanged,
+  StringValueFromContract: str,
+  NumValueFromContract: u64,
+  VecStringValueFromContract: vec str,
+  VecActorIdValueFromContract: vec actor_id,
+  ErrorInReceiverContractResponse,
+  ReceiverContractIdNotSpecified,
+};
+
+type TransmitterEvents = enum {
+  ReceiverContractIdChanged,
+  StringValueChanged: struct { new: str, old: str },
+  NumValueChanged: struct { new: u64, old: u64 },
+  StringValueAdded: struct { value_added: str },
+  StringValueFromContract: str,
+  NumValueFromContract: u64,
+  VecStringValueFromContract: vec str,
+  ReceiverContractIdNotSpecified,
+  ErrorInReceiverContractResponse,
+  IncorrectAnswerFromReceiverContract,
+};
+
+constructor {
+  New : ();
+  NewWithReceiverId : (receiver_id: actor_id);
+};
+
+service QueryService {
+  query AllCallersFromReceiverContractState : () -> QueryEvents;
+  query ContractOwner : () -> actor_id;
+  query NumValueFromReceiverContractState : () -> QueryEvents;
+  query ReceiverId : () -> opt actor_id;
+  query StringValueFromReceiverContractState : () -> QueryEvents;
+  query VecStringValueFromReceiverContractState : () -> QueryEvents;
+};
+
+service Transmitter {
+  AddStringToReceiverContractVecString : (value: str) -> TransmitterEvents;
+  ChangeReceiverContractNumValue : (new_val: u64) -> TransmitterEvents;
+  ChangeReceiverContractStringValue : (new_val: str) -> TransmitterEvents;
+  NumValueFromReceiverContract : () -> TransmitterEvents;
+  SetReceiverContractId : (receiver_id: actor_id) -> TransmitterEvents;
+  StringValueFromReceiverContract : () -> TransmitterEvents;
+  VecStringFromReceiverContract : () -> TransmitterEvents;
+};
+

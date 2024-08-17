@@ -1,0 +1,23 @@
+type ReceiverEvents = enum {
+  StringValueChanged: struct { new: str, old: str },
+  NumValueChange: struct { new: u64, old: u64 },
+  StringAddedToVec: struct { added: str },
+};
+
+constructor {
+  New : ();
+};
+
+service QuerySvc {
+  query AllCallers : () -> vec actor_id;
+  query StateNumValue : () -> u64;
+  query StateStringValue : () -> str;
+  query VecStringValue : () -> vec str;
+};
+
+service Receiver {
+  AddStringToVec : (value: str) -> ReceiverEvents;
+  SetNumValue : (new_value: u64) -> ReceiverEvents;
+  SetStringValue : (new_value: str) -> ReceiverEvents;
+};
+
