@@ -1,4 +1,4 @@
-use app::ReceiverProgram;
+use app::MiniDexsProgram;
 use sails_idl_gen::program;
 use sails_client_gen::ClientGenerator;
 use std::{env, path::PathBuf};
@@ -15,7 +15,7 @@ fn main() {
     let idl_path = cargo_toml_path.clone().join("app.idl");
 
     // This generate the contract IDL
-    program::generate_idl_to_file::<ReceiverProgram>(idl_path.clone())
+    program::generate_idl_to_file::<MiniDexsProgram>(idl_path.clone())
         .unwrap();
 
     // Generator of the clients of the contract
