@@ -1,40 +1,62 @@
 use gstd::msg;
-use sails_rs::{collections::HashSet, gstd::service, prelude::*};
+use sails_rs::{
+    collections::{HashMap, HashSet},
+    gstd::service,
+    prelude::*,
+};
 mod funcs;
 use crate::services;
-use vft_service::{Service as VftService, Storage};
+use vnft_service::utils::TokenId;
+use vnft_service::{Service as VnftService, Storage};
 
 #[derive(Default)]
 pub struct ExtendedStorage {
+    token_id: TokenId,
     minters: HashSet<ActorId>,
     burners: HashSet<ActorId>,
     admins: HashSet<ActorId>,
+    token_metadata_by_id: HashMap<TokenId, TokenMetadata>,
+}
+
+#[derive(Default, Debug, Encode, Decode, TypeInfo, Clone)]
+pub struct TokenMetadata {
+    pub name: String,
+    pub description: String,
+    pub media: String, // URL to associated media, preferably to decentralized, content-addressed storage
+    pub reference: String, // URL to an off-chain JSON file with more info
 }
 
 static mut EXTENDED_STORAGE: Option<ExtendedStorage> = None;
 
 #[derive(Encode, Decode, TypeInfo)]
 pub enum Event {
-    Minted { to: ActorId, value: U256 },
-    Burned { from: ActorId, value: U256 },
+    Minted {
+        to: ActorId,
+        token_metadata: TokenMetadata,
+    },
+    Burned {
+        from: ActorId,
+        token_id: TokenId,
+    },
 }
 #[derive(Clone)]
 pub struct ExtendedService {
-    vft: VftService,
+    vnft: VnftService,
 }
 
 impl ExtendedService {
-    pub fn seed(name: String, symbol: String, decimals: u8) -> Self {
+    pub fn init(name: String, symbol: String) -> Self {
         let admin = msg::source();
         unsafe {
             EXTENDED_STORAGE = Some(ExtendedStorage {
                 admins: [admin].into(),
                 minters: [admin].into(),
                 burners: [admin].into(),
+                ..Default::default()
             });
         };
         ExtendedService {
-            vft: <VftService>::seed(name, symbol, decimals),
+            vnft: <VnftService>::init(name, symbol),
         }
     }
 
@@ -54,41 +76,46 @@ impl ExtendedService {
     }
 }
 
-#[service(extends = VftService, events = Event)]
+#[service(extends = VnftService, events = Event)]
 impl ExtendedService {
     pub fn new() -> Self {
         Self {
-            vft: VftService::new(),
+            vnft: VnftService::new(),
         }
     }
-    pub fn mint(&mut self, to: ActorId, value: U256) -> bool {
+    pub fn mint(&mut self, to: ActorId, token_metadata: TokenMetadata) {
         if !self.get().minters.contains(&msg::source()) {
             panic!("Not allowed to mint")
         };
-
-        let mutated = services::utils::panicking(|| {
-            funcs::mint(Storage::balances(), Storage::total_supply(), to, value)
+        services::utils::panicking(|| {
+            funcs::mint(
+                Storage::owner_by_id(),
+                Storage::tokens_for_owner(),
+                &mut self.get_mut().token_metadata_by_id,
+                &mut self.get_mut().token_id,
+                to,
+                token_metadata.clone(),
+            )
         });
-        if mutated {
-            self.notify_on(Event::Minted { to, value })
-                .expect("Notification Error");
-        }
-        mutated
+        self.notify_on(Event::Minted { to, token_metadata })
+            .expect("Notification Error");
     }
 
-    pub fn burn(&mut self, from: ActorId, value: U256) -> bool {
+    pub fn burn(&mut self, from: ActorId, token_id: TokenId) {
         if !self.get().burners.contains(&msg::source()) {
             panic!("Not allowed to burn")
         };
-
-        let mutated = services::utils::panicking(|| {
-            funcs::burn(Storage::balances(), Storage::total_supply(), from, value)
+        services::utils::panicking(|| {
+            funcs::burn(
+                Storage::owner_by_id(),
+                Storage::tokens_for_owner(),
+                Storage::token_approvals(),
+                &mut self.get_mut().token_metadata_by_id,
+                token_id,
+            )
         });
-        if mutated {
-            self.notify_on(Event::Burned { from, value })
-                .expect("Notification Error");
-        }
-        mutated
+        self.notify_on(Event::Burned { from, token_id })
+            .expect("Notification Error");
     }
 
     pub fn grant_admin_role(&mut self, to: ActorId) {
@@ -127,6 +154,12 @@ impl ExtendedService {
     pub fn admins(&self) -> Vec<ActorId> {
         self.get().admins.clone().into_iter().collect()
     }
+    pub fn token_id(&self) -> TokenId {
+        self.get().token_id
+    }
+    pub fn token_metadata_by_id(&self, token_id: TokenId) -> Option<TokenMetadata> {
+        self.get().token_metadata_by_id.get(&token_id).cloned()
+    }
 }
 
 impl ExtendedService {
@@ -136,8 +169,8 @@ impl ExtendedService {
         };
     }
 }
-impl AsRef<VftService> for ExtendedService {
-    fn as_ref(&self) -> &VftService {
-        &self.vft
+impl AsRef<VnftService> for ExtendedService {
+    fn as_ref(&self) -> &VnftService {
+        &self.vnft
     }
 }
