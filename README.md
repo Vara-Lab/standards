@@ -8,9 +8,11 @@ Contracts and services are in a "fixed" version of the [gear-foundation](https:/
 
 - **vft-service**: Vara Fungible Token service, you can find more information on the [Vara wiki](https://wiki.vara.network/docs/examples/Standards/vft)
 - **vnft-service**: Vara Non-Fungible Token service, you can find more information on the [Vara wiki](https://wiki.vara.network/docs/examples/Standards/vnft)
+- **vmt-service**: Vara Multiple Token service, you can find mor information on the [Vara wiki](https://wiki.vara.network/docs/examples/Standards/vmt)
 
 ## Contracts:
 
 - **extended-vft**: contract that extends the vft service and implements extra methods.
 - **extended-vnft**: contract that extends the vnft service and implements extra methods.
+- **extended-vmt**: contract that extends the vmt service and implements extra methods.
 
