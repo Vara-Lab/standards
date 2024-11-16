@@ -1754,11 +1754,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "extended-vnft-app"
+name = "extended-vmt-app"
 version = "0.1.0"
 dependencies = [
  "env_logger 0.11.5",
- "extended_vnft_wasm",
+ "extended_vmt_wasm",
  "gclient",
  "gear-core",
  "gear-wasm-builder",
@@ -1769,14 +1769,14 @@ dependencies = [
  "sails-rs",
  "scale-info",
  "tokio",
- "vnft-service",
+ "vmt-service",
 ]
 
 [[package]]
-name = "extended_vnft_wasm"
+name = "extended_vmt_wasm"
 version = "0.1.0"
 dependencies = [
- "extended-vnft-app",
+ "extended-vmt-app",
  "sails-client-gen",
  "sails-idl-gen",
  "sails-rs",
@@ -7163,9 +7163,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 
 [[package]]
-name = "vnft-service"
+name = "vmt-service"
 version = "0.1.0"
-source = "git+https://github.com/gear-foundation/standards#bc4c59f957ff332f20b08b8da8e7d20514b19fa0"
 dependencies = [
  "gstd",
  "log",
