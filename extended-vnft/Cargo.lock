@@ -7165,7 +7165,7 @@ checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 [[package]]
 name = "vnft-service"
 version = "0.1.0"
-source = "git+https://github.com/gear-foundation/standards#bc4c59f957ff332f20b08b8da8e7d20514b19fa0"
+source = "git+https://github.com/Vara-Lab/standards#470b116e99bf53f8affdae32516b84e71e39af3f"
 dependencies = [
  "gstd",
  "log",
