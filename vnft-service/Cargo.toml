@@ -1,15 +1,18 @@
 [package]
 name = "vnft-service"
-version = "0.1.0"
+version = "1.1.0"
+license = "MIT"
 edition = "2021"
-license = "GPL-3.0"
 
 [dependencies]
-gstd = "=1.6.2"
+gstd = "=1.7.0"
 log = "*"
-sails-rs = "=0.6.1"
-parity-scale-codec = { version = "3.6", default-features = false }
-scale-info = { version = "2.10", default-features = false }
+sails-rs = "=0.7.0"
+scale-info = { version = "2", default-features = false }
+parity-scale-codec = { version = "3", default-features = false }
 
 [dev-dependencies]
 env_logger = "*"
+
+[features]
+wasm-binary = []

@@ -2,7 +2,9 @@
 
 You can find the services standards and contracts that use this services to extend their functionalities.
 
-Contracts and services are in a "fixed" version of the [gear-foundation](https://github.com/gear-foundation) [standards](https://github.com/gear-foundation/standards/tree/master)
+Contracts and services are in a "fixed" version of the [gear-foundation](https://github.com/gear-foundation) [standards](https://github.com/gear-foundation/standards/tree/master), The standards were modified so that they can work individually, however, you can use the standard version which are within a workspace.
+
+When compiling each contract (extended-v..), a new folder called `idl_and_client` will be created, which will contain the idl and client of the contract.
 
 ## Services
 

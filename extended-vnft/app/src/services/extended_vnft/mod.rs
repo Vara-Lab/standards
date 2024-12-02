@@ -19,6 +19,8 @@ pub struct ExtendedStorage {
 }
 
 #[derive(Default, Debug, Encode, Decode, TypeInfo, Clone)]
+#[codec(crate = sails_rs::scale_codec)]
+#[scale_info(crate = sails_rs::scale_info)]
 pub struct TokenMetadata {
     pub name: String,
     pub description: String,
@@ -29,6 +31,8 @@ pub struct TokenMetadata {
 static mut EXTENDED_STORAGE: Option<ExtendedStorage> = None;
 
 #[derive(Encode, Decode, TypeInfo)]
+#[codec(crate = sails_rs::scale_codec)]
+#[scale_info(crate = sails_rs::scale_info)]
 pub enum Event {
     Minted {
         to: ActorId,
@@ -159,6 +163,17 @@ impl ExtendedService {
     }
     pub fn token_metadata_by_id(&self, token_id: TokenId) -> Option<TokenMetadata> {
         self.get().token_metadata_by_id.get(&token_id).cloned()
+    }
+    pub fn tokens_for_owner(&self, owner: ActorId) -> Vec<(TokenId, TokenMetadata)> {
+        Storage::tokens_for_owner()
+            .get(&owner)
+            .unwrap_or(&HashSet::new())
+            .iter()
+            .filter_map(|token_id| {
+                self.token_metadata_by_id(*token_id)
+                    .map(|metadata| (*token_id, metadata))
+            })
+            .collect()
     }
 }
 
