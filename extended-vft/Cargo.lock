@@ -781,9 +781,9 @@ dependencies = [
 
 [[package]]
 name = "cc"
-version = "1.2.4"
+version = "1.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9157bbaa6b165880c27a4293a474c91cdcf265cc68cc829bf10be0964a391caf"
+checksum = "27f657647bcff5394bf56c7317665bbf790a137a50eaaa5c6bfbb9e27a518f2d"
 dependencies = [
  "shlex",
 ]
@@ -1709,12 +1709,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "extended-vnft"
+name = "extended-vft"
 version = "1.1.0"
 dependencies = [
- "extended-vnft",
- "extended-vnft-app",
- "extended-vnft-client",
+ "extended-vft",
+ "extended-vft-app",
+ "extended-vft-client",
  "gclient",
  "gear-core",
  "sails-client-gen",
@@ -1724,19 +1724,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "extended-vnft-app"
+name = "extended-vft-app"
 version = "0.1.0"
 dependencies = [
  "gstd",
  "sails-rs",
- "vnft-service",
+ "vft-service",
 ]
 
 [[package]]
-name = "extended-vnft-client"
+name = "extended-vft-client"
 version = "0.1.0"
 dependencies = [
- "extended-vnft-app",
+ "extended-vft-app",
  "sails-client-gen",
  "sails-idl-gen",
  "sails-rs",
@@ -7477,7 +7477,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 
 [[package]]
-name = "vnft-service"
+name = "vft-service"
 version = "1.1.0"
 source = "git+https://github.com/Vara-Lab/standards#ea3244834fe2a172193a68ec1ffe198621f6560b"
 dependencies = [
