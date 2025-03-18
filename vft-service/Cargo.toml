@@ -4,9 +4,9 @@ version = "1.1.0"
 license = "MIT"
 edition = "2021"
 [dependencies]
-gstd = "=1.7.0"
+gstd = "=1.7.1"
 log = "*"
-sails-rs = "=0.7.1"
+sails-rs = "=0.7.3"
 scale-info = { version = "2", default-features = false }
 parity-scale-codec = { version = "3", default-features = false }
 
