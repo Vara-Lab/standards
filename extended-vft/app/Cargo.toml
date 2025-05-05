@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-sails-rs = "=0.8"
-gstd = "=1.8"
-vft-service = { git = "https://github.com/Vara-Lab/standards" }
+sails-rs.workspace = true
+gstd.workspace = true
+vft-service = { path = "../../vft-service" }
