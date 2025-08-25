@@ -1807,6 +1807,7 @@ dependencies = [
 name = "extended-vnft-app"
 version = "0.1.0"
 dependencies = [
+ "gstd",
  "sails-rs",
  "vnft-service",
 ]
@@ -7763,7 +7764,7 @@ checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 [[package]]
 name = "vnft-service"
 version = "1.1.0"
-source = "git+https://github.com/Vara-Lab/standards#867b2383292cd42f80504394f1582d02f4efcdcc"
+source = "git+https://github.com/Vara-Lab/standards#9278bc4bbc41c3b35681e65145888316c9429422"
 dependencies = [
  "gstd",
  "log",

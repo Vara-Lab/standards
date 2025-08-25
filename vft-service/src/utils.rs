@@ -7,6 +7,8 @@ pub type BalancesMap = HashMap<ActorId, U256>;
 pub type Result<T, E = Error> = core::result::Result<T, E>;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Encode, Decode, TypeInfo)]
+#[codec(crate = sails_rs::scale_codec)]
+#[scale_info(crate = sails_rs::scale_info)]
 pub enum Error {
     InsufficientAllowance,
     InsufficientBalance,
