@@ -61,10 +61,14 @@ pub enum Event {
     },
 }
 
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct Service();
 
 impl Service {
+    pub fn new() -> Self {
+        Self()
+    }
+
     pub fn init(name: String, symbol: String) -> Self {
         unsafe {
             STORAGE = Some(Storage {
@@ -77,11 +81,6 @@ impl Service {
     }
 }
 
-impl Service {
-    pub fn new() -> Self {
-        Self()
-    }
-}
 
 #[service(events = Event)]
 impl Service {
@@ -171,7 +170,7 @@ impl Service {
         let storage = Storage::get();
         &storage.name
     }
-
+    
     #[export]
     pub fn symbol(&self) -> &'static str {
         let storage = Storage::get();

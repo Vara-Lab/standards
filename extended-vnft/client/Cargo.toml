@@ -5,12 +5,12 @@ edition = "2021"
 
 [dependencies]
 mockall = { version = "0.12", optional = true }
-sails-rs = "=0.8"
+sails-rs = "0.9.0"
 
 [build-dependencies]
 extended-vnft-app = { path = "../app" }
-sails-idl-gen = "=0.8"
-sails-client-gen = "=0.8"
+sails-idl-gen = "0.9.0"
+sails-client-gen = "0.9.0"
 
 [features]
 mocks = ["sails-rs/mockall", "dep:mockall"]
