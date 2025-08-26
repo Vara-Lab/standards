@@ -1,16 +1,16 @@
 [package]
 name = "extended-vft-client"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 mockall = { version = "0.12", optional = true }
-sails-rs = "=0.8"
+sails-rs = "0.9.0"
 
 [build-dependencies]
 extended-vft-app = { path = "../app" }
-sails-client-gen = "=0.8"
-sails-idl-gen = "=0.8"
+sails-client-gen = "0.9.0"
+sails-idl-gen = "0.9.0"
 
 [features]
 mocks = ["sails-rs/mockall", "dep:mockall"]
