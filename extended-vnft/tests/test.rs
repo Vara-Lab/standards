@@ -12,14 +12,14 @@ pub const USER_ID: [u64; 2] = [11, 12];
 async fn test_basic_function() {
     let system = System::new();
     system.init_logger();
-    system.mint_to(ADMIN_ID, 100_000_000_000_000);
-    system.mint_to(USER_ID[0], 100_000_000_000_000);
-    system.mint_to(USER_ID[1], 100_000_000_000_000);
+    system.mint_to(ADMIN_ID, 1_000_000_000_000_000);
+    system.mint_to(USER_ID[0], 1_000_000_000_000_000);
+    system.mint_to(USER_ID[1], 1_000_000_000_000_000);
     let program_space = GTestRemoting::new(system, ADMIN_ID.into());
 
     let code_id = program_space
         .system()
-        .submit_code_file("./target/wasm32-unknown-unknown/release/extended_vnft.opt.wasm");
+        .submit_code_file("../target/wasm32-gear/release/extended_vnft.opt.wasm");
 
     let extended_vnft_factory = Factory::new(program_space.clone());
     let extended_vnft_id = extended_vnft_factory
@@ -79,7 +79,7 @@ async fn test_basic_function() {
     // approve
     client
         .approve(USER_ID[1].into(), 0.into())
-        .with_args(GTestArgs::new(USER_ID[0].into()))
+        .with_args(|args| args.with_actor_id(USER_ID[0].into()))
         .send_recv(extended_vnft_id)
         .await
         .unwrap();
@@ -87,7 +87,7 @@ async fn test_basic_function() {
     // transfer from
     client
         .transfer_from(USER_ID[0].into(), ADMIN_ID.into(), 0.into())
-        .with_args(GTestArgs::new(USER_ID[1].into()))
+        .with_args(|args| args.with_actor_id(USER_ID[1].into()))
         .send_recv(extended_vnft_id)
         .await
         .unwrap();
@@ -125,16 +125,16 @@ async fn test_basic_function() {
 async fn test_grant_role() {
     let system = System::new();
     system.init_logger();
-    system.mint_to(ADMIN_ID, 100_000_000_000_000);
-    system.mint_to(USER_ID[0], 100_000_000_000_000);
-    system.mint_to(USER_ID[1], 100_000_000_000_000);
+    system.mint_to(ADMIN_ID, 1_000_000_000_000_000);
+    system.mint_to(USER_ID[0], 1_000_000_000_000_000);
+    system.mint_to(USER_ID[1], 1_000_000_000_000_000);
     let program_space = GTestRemoting::new(system, ADMIN_ID.into());
 
     let mut client = VftClient::new(program_space.clone());
 
     let code_id = program_space
         .system()
-        .submit_code_file("./target/wasm32-unknown-unknown/release/extended_vnft.opt.wasm");
+        .submit_code_file("../target/wasm32-gear/release/extended_vnft.opt.wasm");
 
     let extended_vft_factory = Factory::new(program_space.clone());
     let extended_vft_id = extended_vft_factory
@@ -152,7 +152,7 @@ async fn test_grant_role() {
     };
     let res = client
         .mint(USER_ID[0].into(), metadata)
-        .with_args(GTestArgs::new(USER_ID[0].into()))
+        .with_args(|args| args.with_actor_id(USER_ID[0].into()))
         .send_recv(extended_vft_id)
         .await;
     assert!(res.is_err());
@@ -175,7 +175,7 @@ async fn test_grant_role() {
                 reference: "token_reference".to_string(),
             },
         )
-        .with_args(GTestArgs::new(USER_ID[0].into()))
+        .with_args(|args| args.with_actor_id(USER_ID[0].into()))
         .send_recv(extended_vft_id)
         .await
         .unwrap();
@@ -190,7 +190,7 @@ async fn test_grant_role() {
     // try burner role
     let res = client
         .burn(USER_ID[0].into(), 0.into())
-        .with_args(GTestArgs::new(USER_ID[0].into()))
+        .with_args(|args| args.with_actor_id(USER_ID[0].into()))
         .send_recv(extended_vft_id)
         .await;
     assert!(res.is_err());
@@ -205,7 +205,7 @@ async fn test_grant_role() {
     assert!(burners.contains(&USER_ID[0].into()));
     client
         .burn(USER_ID[0].into(), 0.into())
-        .with_args(GTestArgs::new(USER_ID[0].into()))
+        .with_args(|args| args.with_actor_id(USER_ID[0].into()))
         .send_recv(extended_vft_id)
         .await
         .unwrap();

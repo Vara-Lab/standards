@@ -1,2 +1,4 @@
 .binpath
-target
+/target
+./wasm/.binpath
+/.DS_Store

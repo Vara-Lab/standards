@@ -5,21 +5,12 @@ edition = "2021"
 
 [dependencies]
 mockall = { version = "0.12", optional = true }
-<<<<<<< HEAD
-sails-rs = "0.9.0"
+sails-rs = "=0.8.1"
 
 [build-dependencies]
 extended-vnft-app = { path = "../app" }
-sails-idl-gen = "0.9.0"
-sails-client-gen = "0.9.0"
-=======
-sails-rs.workspace = true
-
-[build-dependencies]
-extended-vnft-app = { path = "../app" }
-sails-idl-gen.workspace = true
-sails-client-gen.workspace = true
->>>>>>> parent of 7e43649 (Changed all extended standards Cargo.toml)
+sails-idl-gen = "=0.8.1"
+sails-client-gen = "=0.8.1"
 
 [features]
 mocks = ["sails-rs/mockall", "dep:mockall"]

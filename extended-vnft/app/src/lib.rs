@@ -3,17 +3,17 @@
 
 use sails_rs::prelude::*;
 mod services;
-use services::extended_vft::ExtendedService;
-pub struct ExtendedVftProgram(());
+use services::extended_vnft::ExtendedService;
+pub struct ExtendedVnftProgram(());
 
 #[program]
-impl ExtendedVftProgram {
-    pub fn new(name: String, symbol: String, decimals: u8) -> Self {
-        ExtendedService::seed(name, symbol, decimals);
+impl ExtendedVnftProgram {
+    pub fn new(name: String, symbol: String) -> Self {
+        ExtendedService::init(name, symbol);
         Self(())
     }
 
-    pub fn vft(&self) -> ExtendedService {
+    pub fn vnft(&self) -> ExtendedService {
         ExtendedService::new()
     }
 }

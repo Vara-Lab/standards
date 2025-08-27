@@ -6,7 +6,7 @@ pub type TokenId = U256;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Encode, Decode, TypeInfo)]
 #[codec(crate = sails_rs::scale_codec)]
-#[scale_info(crate = sails_rs::scale_info)] 
+#[scale_info(crate = sails_rs::scale_info)]
 pub enum Error {
     InsufficientAllowance,
     InsufficientBalance,

@@ -46,7 +46,6 @@ pub struct Metadata {
     pub decimals: u8,
 }
 
-#[event]
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Encode, Decode, TypeInfo)]
 #[codec(crate = sails_rs::scale_codec)]
 #[scale_info(crate = sails_rs::scale_info)]
@@ -64,14 +63,9 @@ pub enum Event {
 }
 
 #[derive(Clone)]
-pub struct Service;
+pub struct Service();
 
 impl Service {
-
-    pub fn new() -> Self {
-        Self
-    }
-    
     pub fn seed(name: String, symbol: String, decimals: u8) -> Self {
         unsafe {
             STORAGE = Some(Storage {
@@ -83,14 +77,16 @@ impl Service {
                 ..Default::default()
             });
         }
-        Self
+        Self()
     }
 }
 
 #[service(events = Event)]
 impl Service {
-    
-    #[export]
+    pub fn new() -> Self {
+        Self()
+    }
+
     pub fn approve(&mut self, spender: ActorId, value: U256) -> bool {
         let owner = msg::source();
         let storage = Storage::get_mut();
@@ -108,7 +104,6 @@ impl Service {
         mutated
     }
 
-    #[export]
     pub fn transfer(&mut self, to: ActorId, value: U256) -> bool {
         let from = msg::source();
         let storage = Storage::get_mut();
@@ -123,7 +118,6 @@ impl Service {
         mutated
     }
 
-    #[export]
     pub fn transfer_from(&mut self, from: ActorId, to: ActorId, value: U256) -> bool {
         let spender = msg::source();
         let storage = Storage::get_mut();
@@ -146,37 +140,31 @@ impl Service {
         mutated
     }
 
-    #[export]
     pub fn allowance(&self, owner: ActorId, spender: ActorId) -> U256 {
         let storage = Storage::get();
         funcs::allowance(&storage.allowances, owner, spender)
     }
 
-    #[export]
     pub fn balance_of(&self, account: ActorId) -> U256 {
         let storage = Storage::get();
         funcs::balance_of(&storage.balances, account)
     }
 
-    #[export]
     pub fn decimals(&self) -> &'static u8 {
         let storage = Storage::get();
         &storage.meta.decimals
     }
 
-    #[export]
     pub fn name(&self) -> &'static str {
         let storage = Storage::get();
         &storage.meta.name
     }
 
-    #[export]
     pub fn symbol(&self) -> &'static str {
         let storage = Storage::get();
         &storage.meta.symbol
     }
-    
-    #[export]
+
     pub fn total_supply(&self) -> &'static U256 {
         let storage = Storage::get();
         &storage.total_supply
