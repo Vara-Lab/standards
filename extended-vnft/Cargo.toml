@@ -11,6 +11,7 @@ extended-vnft-app = { path = "app" }
 extended-vnft-app = { path = "app" }
 sails-rs = { version = "=0.8.1", features = ["wasm-builder"] }
 sails-idl-gen = "=0.8.1"
+sails-client-gen = "=0.8.1"
 
 [dev-dependencies]
 extended-vnft = { path = ".", features = ["wasm-binary"] }

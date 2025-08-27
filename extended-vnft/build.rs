@@ -25,15 +25,15 @@ fn main() {
 
     // Path where the file "extended_vmt.idl" and "extended_vmt_client.rs" 
     // files will be created
-    let outdir_idl_path = outdir_path.clone().join("extended_vft.idl");
-    let outdir_client_path = outdir_path.clone().join("extended_vft_client.rs");
+    let outdir_idl_path = outdir_path.clone().join("extended_vnft.idl");
+    let outdir_client_path = outdir_path.clone().join("extended_vnft_client.rs");
 
     // Path where the "idl_and_client" directory will be created, it will stores the idl and
     // client from contract
     let idl_and_client_dir_path = cargo_toml_path.clone().join("idl_and_client");
 
     // This generate the contract IDL
-    sails_idl_gen::generate_idl_to_file::<extended_vft_app::ExtendedVftProgram>(outdir_idl_path.clone())
+    sails_idl_gen::generate_idl_to_file::<extended_vnft_app::ExtendedVnftProgram>(outdir_idl_path.clone())
         .unwrap();
 
     // Generator of the clients of the contract
@@ -53,9 +53,9 @@ fn main() {
     let _ = fs::create_dir(idl_and_client_dir_path.clone());
 
     // Then, copies the client and idl that is in the OUT_DIR path in the "idl_and_client" directory
-    fs::copy(outdir_client_path, idl_and_client_dir_path.clone().join("extended_vft_client.rs"))
+    fs::copy(outdir_client_path, idl_and_client_dir_path.clone().join("extended_vnft_client.rs"))
         .unwrap();
 
-    fs::copy(outdir_idl_path, idl_and_client_dir_path.join("extended_vft.idl"))
+    fs::copy(outdir_idl_path, idl_and_client_dir_path.join("extended_vnft.idl"))
         .unwrap();
 }
