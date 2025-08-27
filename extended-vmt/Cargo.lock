@@ -7630,7 +7630,7 @@ checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 [[package]]
 name = "vmt-service"
 version = "1.1.0"
-source = "git+https://github.com/Vara-Lab/standards#4382fd14a5a8ff82d08dd3a98bd6aa3e441f75d6"
+source = "git+https://github.com/Vara-Lab/standards#314a5354d701cd5272154c5c07fd95ce994b6468"
 dependencies = [
  "gstd",
  "log",
