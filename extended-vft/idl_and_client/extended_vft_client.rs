@@ -3,9 +3,9 @@
 use sails_rs::collections::BTreeMap;
 #[allow(unused_imports)]
 use sails_rs::{
+    String,
     calls::{Activation, Call, Query, Remoting, RemotingAction},
     prelude::*,
-    String,
 };
 pub struct ExtendedVftFactory<R> {
     #[allow(dead_code)]
@@ -476,9 +476,9 @@ pub mod traits {
         fn grant_burner_role(&mut self, to: ActorId) -> impl Call<Output = (), Args = Self::Args>;
         fn grant_minter_role(&mut self, to: ActorId) -> impl Call<Output = (), Args = Self::Args>;
         fn mint(&mut self, to: ActorId, value: U256)
-            -> impl Call<Output = bool, Args = Self::Args>;
+        -> impl Call<Output = bool, Args = Self::Args>;
         fn revoke_admin_role(&mut self, from: ActorId)
-            -> impl Call<Output = (), Args = Self::Args>;
+        -> impl Call<Output = (), Args = Self::Args>;
         fn revoke_burner_role(
             &mut self,
             from: ActorId,
