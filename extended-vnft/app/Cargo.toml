@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-sails-rs = "=0.8.1" 
-gstd = "=1.8.1" 
+sails-rs = "0.9.1" 
+gstd = "1.9.1" 
 vnft-service = { git = "https://github.com/Vara-Lab/standards" }
